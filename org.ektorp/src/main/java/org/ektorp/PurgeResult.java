@@ -1,19 +1,22 @@
 package org.ektorp;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.*;
-
 public class PurgeResult {
 
 	private final Map<String, List<String>> purged;
-	private final long purgeSeq;
+	private final String purgeSeq;
 
 	@JsonCreator
 	public PurgeResult(@JsonProperty("purged") Map<String,
-			List<String>> purged,@JsonProperty("purge_seq") long purgeSeq) {
+			List<String>> purged,@JsonProperty("purge_seq") String purgeSeq) {
 		this.purged = purged;
 		this.purgeSeq = purgeSeq;
 	}
@@ -22,7 +25,7 @@ public class PurgeResult {
 		return purged;
 	}
 
-	public long getPurgeSeq() {
+	public String getPurgeSeq() {
 		return purgeSeq;
 	}
 

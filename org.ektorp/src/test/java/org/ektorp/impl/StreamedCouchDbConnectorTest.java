@@ -218,14 +218,14 @@ public class StreamedCouchDbConnectorTest extends StdCouchDbConnectorTest {
 
     @Test
     public void testPurge() {
-        String rsp = "{\"purged\" : { \"Billy\" : [ \"17-b3eb5ac6fbaef4428d712e66483dcb79\"]},\"purge_seq\" : 11}";
+        String rsp = "{\"purged\" : { \"Billy\" : [ \"17-b3eb5ac6fbaef4428d712e66483dcb79\"]},\"purge_seq\" : \"0-g1AAAABXeJzLYWBgYMpgTmEQTM4vTc5ISXLIyU9OzMnILy7JAUnlsQBJhgYg9R8IshIZ8KhNZEiqhyjKAgBm5Rxs\"}";
 
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
         doAnswer(new MarshallEntityAndReturnAnswer(output, HttpResponseStub.valueOf(200, rsp))).when(httpClient).post(eq("/test_db/_purge"), any(HttpEntity.class));
         Map<String, List<String>> revisionsToPurge = new HashMap<String, List<String>>();
         revisionsToPurge.put("Billy", Collections.singletonList("17-b3eb5ac6fbaef4428d712e66483dcb79"));
         PurgeResult r = dbCon.purge(revisionsToPurge);
-        assertEquals(11, r.getPurgeSeq());
+        assertEquals("0-g1AAAABXeJzLYWBgYMpgTmEQTM4vTc5ISXLIyU9OzMnILy7JAUnlsQBJhgYg9R8IshIZ8KhNZEiqhyjKAgBm5Rxs", r.getPurgeSeq());
         assertTrue(r.getPurged().containsKey("Billy"));
     }
 
